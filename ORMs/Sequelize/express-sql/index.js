@@ -1,5 +1,5 @@
 const app = require('./express/app');
-const sequelize = require('./sequelize'); //change to sqlite to use
+const sequelize = require('sequelize');
 const PORT = 8080;
 
 async function assertDatabaseConnectionOk() {
