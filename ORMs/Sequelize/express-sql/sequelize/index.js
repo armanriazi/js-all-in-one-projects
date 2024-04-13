@@ -7,7 +7,6 @@ const { applyExtraSetup } = require("./extra-setup");
 const  runTimeEnv= process.env.NODE_ENV || "development",
 envConfig = config[runTimeEnv];
 
-console.log(config[runTimeEnv]);
 	sequelize = new Sequelize(
 		config[runTimeEnv].database,
 		config[runTimeEnv].username,
