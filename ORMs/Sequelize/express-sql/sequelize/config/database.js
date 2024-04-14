@@ -8,8 +8,8 @@ module.exports=  {
 		host: env("DB_HOST"),
 		dialect: env("DB_DIALECT"),
 		logging: true,
-		//logQueryParameters: true,
-		//benchmark: true,
+		logQueryParameters: true,
+		benchmark: true,
 	},
 	test: {
 		username: env("DB_USER"),

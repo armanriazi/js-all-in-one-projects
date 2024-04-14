@@ -1,41 +1,41 @@
-const sequelize = require("../sequelize");// to use sqlite you will need to change name
-const { pickRandom, randomDate } = require('./helpers/random');
+const sequelize = require("../sequelize");
+const { pickRandom, randomDate } = require("./helpers/random");
 
 async function reset() {
-	console.log('Will rewrite the SQL example database, adding some dummy data.');
+	console.log("Will rewrite the SQL example database, adding some dummy data.");
 
 	await sequelize.sync({ force: true });
 
 	await sequelize.models.user.bulkCreate([
-		{ username: 'jack-sparrow' },
-		{ username: 'white-beard' },
-		{ username: 'black-beard' },
-		{ username: 'brown-beard' },
+		{ username: "jack-sparrow" },
+		{ username: "white-beard" },
+		{ username: "black-beard" },
+		{ username: "brown-beard" },
 	]);
 
 	await sequelize.models.orchestra.bulkCreate([
-		{ name: 'Jalisco Philharmonic' },
-		{ name: 'Symphony No. 4' },
-		{ name: 'Symphony No. 8' },
+		{ name: "Jalisco Philharmonic" },
+		{ name: "Symphony No. 4" },
+		{ name: "Symphony No. 8" },
 	]);
 
 	// Let's create random instruments for each orchestra
 	for (const orchestra of await sequelize.models.orchestra.findAll()) {
 		for (let i = 0; i < 10; i++) {
 			const type = pickRandom([
-				'violin',
-				'trombone',
-				'flute',
-				'harp',
-				'trumpet',
-				'piano',
-				'guitar',
-				'pipe organ',
+				"violin",
+				"trombone",
+				"flute",
+				"harp",
+				"trumpet",
+				"piano",
+				"guitar",
+				"pipe organ",
 			]);
 
 			await orchestra.createInstrument({
 				type: type,
-				purchaseDate: randomDate()
+				purchaseDate: randomDate(),
 			});
 
 			// The following would be equivalent in this case:
@@ -47,7 +47,7 @@ async function reset() {
 		}
 	}
 
-	console.log('Done!');
+	console.log("Done!");
 }
 
 reset();
