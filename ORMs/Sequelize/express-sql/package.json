@@ -6,29 +6,96 @@
 	"main": "index.js",
 	"type": "commonjs",
 	"scripts": {
-		"setup": "cross-env NODE_ENV=development node ./database/setup.js",
+		"setup": "cross-env NODE_ENV=development node ./db/setup.js",
 		"start": "cross-env NODE_ENV=development node ./index.js",
 		"start:nodemon": "cross-env NODE_ENV=development nodemon -r esm ./index.js",
-		"debug": "DEBUG=http,express:*,app:* nodemon ./index.js"
+		"debug": "DEBUG=http,express:*,app:* nodemon ./index.js",
+		"dev": "cross-env NODE_ENV=development nodemon -r esm ./index",
+		"test_server": "webpack --mode=production && cross-env NODE_ENV=production node dist/index.js",
+		"test_dev": "cross-env NODE_ENV=test node -r esm ./index",
+		"db:init": "node -r esm -e 'require(\"./db/init\").initDatabase()'",
+		"db:drop": "node -r esm -e 'require(\"./db/drop\").dropDatabase()'",
+		"db:migrate:create": "npx sequelize-cli migration:generate",
+		"or:db:migrate": "npx sequelize-cli db:migrate",
+		"db:migrate": "node -r esm ./node_modules/.bin/sequelize-cli db:migrate",
+		"inspect:db:migrate": "node --inspect ./node_modules/.bin/sequelize-cli db:migrate",
+		"db:wipe": "npx sequelize-cli db:migrate:undo:all",
+		"db:migrate:undo": "cross-env NODE_ENV=development node -r esm ./node_modules/.bin/sequelize-cli db:migrate:undo",
+		"db:migrate:revert:user": "npx sequelize-cli db:migrate:undo:all --to 20220729150928-create-user",
+		"db:create:seed": "node -r esm ./node_modules/.bin/sequelize-cli seed:generate --name",
+		"db:run:seed": "node -r esm ./node_modules/.bin/sequelize-cli db:seed:all",
+		"db:undo:seed": "node -r esm ./node_modules/.bin/sequelize-cli db:seed:undo:all",
+		"db:reset:dev": "cross-env NODE_ENV=development npm run db:drop  &&  cross-env NODE_ENV=development npm run db:init  && cross-env NODE_ENV=development npm run db:migrate && cross-env NODE_ENV=development npm run db:run:seed",
+		"db:reset:test": "cross-env NODE_ENV=test npm run db:drop  &&  cross-env NODE_ENV=test npm run db:init  && cross-env NODE_ENV=test npm run db:migrate && cross-env NODE_ENV=test npm run db:run:seed",
+		"test": "cross-env NODE_ENV=test npm run db:reset:test  && npx jest --clearCache  && cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules  npx jest --runInBand --detectOpenHandles --forceExit",
+		"test:watch": "jest --watch --verbose --silent --runInBand",
+		"lint": "npx eslint .",
+		"lint:fix": "npx eslint --fix .",
+		"docs": "jsdoc -c jsdoc.config.json",
+		"test:overall": "cross-env NODE_ENV=test  jest ./test/index.test.js --collectCoverage --forceExit",
+		"user_factory": "cross-env NODE_ENV=development node -r esm ./db/factory/userFactory.js",
+		"test:watch2": "cross-env NODE_ENV=test jest --watch --runInBand --verbose --no-coverage-in-stdout --forceExit"
 	},
 	"engines": {
 		"node": ">=12"
 	},
+	"nodemonConfig": {
+		"ignore": [
+			"src/config/config.json",
+			"__tests__/*",
+			"uploads/*",
+			"logs/*"
+		],
+		"exitcrash": true
+	},
 	"dependencies": {
-		"body-parser": "^1.20.2",
-		"cross-env": "^7.0.3",
-		"dotenv": "^16.4.5",
-		"express": "^4.19.2",
-		"pg": "^8.11.5",
-		"sequelize": "^6.37.2"
+		"@faker-js/faker": "^7.6.0",
+		"@grpc/grpc-js": "^1.9.0",
+		"ajv-errors": "*",
+		"ajv-formats": "*",
+		"amqplib": "*",
+		"axios": "^0.21.1",
+		"bcryptjs": "*",
+		"busboy": "*",
+		"chalk": "^4.1.2",
+		"chokidar": "*",
+		"compression": "*",
+		"cors": "*",
+		"cross-env": "*",
+		"dotenv": "*",
+		"express": "*",
+		"express-rate-limit": "^6.6.0",
+		"form-data": "^4.0.0",
+		"helmet": "*",
+		"http-errors": "*",
+		"ioredis": "*",
+		"joi": "*",
+		"jsonwebtoken": "*",
+		"kavenegar": "*",
+		"moment-jalaali": "*",
+		"multer": "*",
+		"partbackendlogger": "^1.0.1",
+		"pg": "*",
+		"pify": "^5.0.0",
+		"request": "^2.88.2",
+		"sequelize": "*",
+		"socket.io": "^4.7.2",
+		"validator": "^13.7.0",
+		"winston": "*",
+		"ws": "^8.16.0"
 	},
 	"devDependencies": {
+		"@babel/preset-env": "^7.23.2",
+		"@types/request": "^2.48.10",
+		"ajv": "^8.0.1",
 		"esm": "3.2.25",
-		"nodemon": "^3.1.0"
+		"jest": "*",
+		"jsdoc": "*",
+		"jsdoc-route-plugin": "*",
+		"morgan": "*",
+		"nodemon": "*",
+		"prettier": "*",
+		"sequelize-cli": "^6.6.2",
+		"supertest": "*"
 	}
 }
-
-
-
-
-
