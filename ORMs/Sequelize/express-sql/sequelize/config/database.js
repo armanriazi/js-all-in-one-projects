@@ -1,6 +1,6 @@
 const env = require("../../common/env");
 
-module.exports=  {
+module.exports = {
 	development: {
 		username: env("DB_USER"),
 		password: env("DB_PASS"),
@@ -8,8 +8,6 @@ module.exports=  {
 		host: env("DB_HOST"),
 		dialect: env("DB_DIALECT"),
 		logging: true,
-		logQueryParameters: true,
-		benchmark: true,
 	},
 	test: {
 		username: env("DB_USER"),
@@ -28,4 +26,4 @@ module.exports=  {
 		logging: false,
 	},
 	timestamps: true,
-} ;
+};
