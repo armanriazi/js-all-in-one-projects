@@ -1,4 +1,4 @@
-import http from 'http';
+/*import http from 'http';
 
 const server = http.createServer((req, res) => {
   res.end('Hello from the server');
@@ -7,3 +7,6 @@ const server = http.createServer((req, res) => {
 console.log('Server is up and running');
 
 export default server;
+*/
+
+[1, 2, 3].map(n => n + 1);

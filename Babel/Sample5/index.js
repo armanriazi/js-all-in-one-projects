@@ -1,3 +1,4 @@
+/*
 require ("core-js/stable");
 require("regenerator-runtime/runtime");
 const http = require('http');
@@ -9,3 +10,5 @@ const server = http.createServer((req, res) => {
 console.log('Server is up and running');
 
 export default server;
+*/
+[1, 2, 3].map(n => n + 1);

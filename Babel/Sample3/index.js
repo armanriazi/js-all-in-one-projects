@@ -1,5 +1,7 @@
-import http from 'http';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
+/*import http from 'http';
 
 const server = http.createServer((req, res) => {
   res.end('Hello from the server');
@@ -13,3 +15,6 @@ class Bork {
 }
 
 export default server;
+*/
+
+[1, 2, 3].map(n => n + 1);
